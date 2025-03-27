@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreExercisesRequest;
-use App\Http\Requests\UpdateExercisesRequest;
-use App\Models\Exercises;
+use App\Http\Requests\StoreEquipmentRequest;
+use App\Http\Requests\UpdateEquipmentRequest;
+use App\Models\Equipment;
 
-class ExercisesController extends Controller
+class EquipmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Exercises::with('type_of_exercise', 'muscle_group')->get();
+        //
     }
 
     /**
@@ -27,7 +27,7 @@ class ExercisesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreExercisesRequest $request)
+    public function store(StoreEquipmentRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class ExercisesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Exercises $exercises)
+    public function show(Equipment $equipment)
     {
         //
     }
@@ -43,7 +43,7 @@ class ExercisesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Exercises $exercises)
+    public function edit(Equipment $equipment)
     {
         //
     }
@@ -51,7 +51,7 @@ class ExercisesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateExercisesRequest $request, Exercises $exercises)
+    public function update(UpdateEquipmentRequest $request, Equipment $equipment)
     {
         //
     }
@@ -59,7 +59,7 @@ class ExercisesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Exercises $exercises)
+    public function destroy(Equipment $equipment)
     {
         //
     }

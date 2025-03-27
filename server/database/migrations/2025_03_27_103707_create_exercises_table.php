@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exercise_muscle_group', function (Blueprint $table) {
-            $table->foreignId('exercise_id')->constrained()->onDelete('cascade');
+        Schema::create('exercises', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->text('description')->nullable();
+            $table->foreignId('type_of_exercise_id')->constrained()->onDelete('cascade');
             $table->foreignId('muscle_group_id')->constrained()->onDelete('cascade');
-            $table->primary(['exercise_id', 'muscle_group_id']);
+            $table->timestamps();
         });
     }
 
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exercise_muscle_group');
+        Schema::dropIfExists('exercises');
     }
 };
