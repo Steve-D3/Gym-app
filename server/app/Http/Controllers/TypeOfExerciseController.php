@@ -12,7 +12,9 @@ class TypeOfExerciseController extends Controller
      */
     public function index()
     {
-        return Type_of_exercise::select('id', 'name')->get();
+        return Type_of_exercise::select('id', 'name')
+        ->orderBy('id', 'asc')
+        ->get();
     }
 
     /**
@@ -28,7 +30,21 @@ class TypeOfExerciseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the incoming request
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255|unique:type_of_exercises,name',
+        ]);
+
+        // Create a new record
+        $typeOfExercise = Type_of_exercise::create([
+            'name' => $validatedData['name'],
+        ]);
+
+        // Return the created record
+        return response()->json([
+            'id' => $typeOfExercise->id,
+            'name' => $typeOfExercise->name,
+        ], 201); // 201 status code for "Created"
     }
 
     /**
@@ -53,16 +69,32 @@ class TypeOfExerciseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Type_of_exercise $type_of_exercise)
+    public function update(Request $request, Type_of_exercise $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255|unique:type_of_exercises,name',
+        ]);
+
+        $id->update([
+            'name' => $validatedData['name'],
+        ]);
+
+        return response()->json([
+            'message' => 'Type of exercise updated successfully',
+            'data' => $id,
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Type_of_exercise $type_of_exercise)
+    public function destroy(Type_of_exercise $id)
     {
-        //
+        $id->delete();
+
+        return response()->json([
+            'message' => 'Type of exercise deleted successfully',
+            'data' => $id,
+        ], 200);
     }
 }

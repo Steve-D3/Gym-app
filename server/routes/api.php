@@ -11,3 +11,6 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/type_of_exercise', [TypeOfExerciseController::class, 'index']);
 Route::get('/type_of_exercise/{exercise_id}', [TypeOfExerciseController::class, 'show']);
+Route::post('/type_of_exercise', [TypeOfExerciseController::class, 'store']);
+Route::put('/type_of_exercise/{id}', [TypeOfExerciseController::class, 'update']);
+Route::delete('/type_of_exercise/{id}', [TypeOfExerciseController::class, 'destroy']);
