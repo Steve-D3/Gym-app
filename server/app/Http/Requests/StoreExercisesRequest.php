@@ -11,7 +11,7 @@ class StoreExercisesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class StoreExercisesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'type_of_exercise_id' => ['required', 'integer', 'exists:type_of_exercises,id'],
+            'equipment_id' => ['sometimes', 'array'],
+            'equipment_id.*' => ['integer', 'exists:equipment,id'],
+            'muscle_group_id' => ['sometimes', 'array'],
+            'muscle_group_id.*' => ['integer', 'exists:muscle_groups,id'],
         ];
     }
 }

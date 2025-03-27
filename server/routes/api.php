@@ -23,4 +23,6 @@ Route::get('/exercises/search/{name}', [ExercisesController::class, 'search_by_n
 Route::get('/exercises/equipment/{name}', [ExercisesController::class, 'search_by_equipment']);
 Route::get('/exercises/muscle_group/{name}', [ExercisesController::class, 'search_by_muscle_group']);
 Route::put('/exercises/{id}', [ExercisesController::class, 'update']);
+Route::post('/exercises', [ExercisesController::class, 'store']);
+Route::delete('/exercises/{exercise_id}', [ExercisesController::class, 'destroy']);
 

@@ -32,7 +32,20 @@ class ExercisesController extends Controller
      */
     public function store(StoreExercisesRequest $request)
     {
-        //
+        // Step 1: Create the exercise with only the required fields
+        $exercise = Exercises::create($request->only(['name', 'description', 'type_of_exercise_id']));
+
+        // Step 2: Create connections for the pivot tables if provided
+        if ($request->has('equipment_id')) {
+            $exercise->equipment()->sync($request->input('equipment_id'));
+        }
+
+        if ($request->has('muscle_group_id')) {
+            $exercise->muscle_group()->sync($request->input('muscle_group_id'));
+        }
+
+        // Step 3: Return the created exercise as a resource
+        return new ExerciseResource($exercise->load(['type_of_exercise', 'equipment', 'muscle_group']));
     }
 
     /**
@@ -133,8 +146,10 @@ class ExercisesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Exercises $exercises)
+    public function destroy(Exercises $exercise_id)
     {
-        //
+        $exercise_id->delete();
+
+        return response()->json(['message' => 'Exercise deleted successfully'], 200);
     }
 }

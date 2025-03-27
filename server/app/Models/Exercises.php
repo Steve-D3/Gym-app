@@ -15,6 +15,8 @@ class Exercises extends Model
         'name',
         'description',
         'type_of_exercise_id',
+        'equipment_id',
+        'muscle_group_id',
     ];
 
     public function type_of_exercise()
@@ -31,6 +33,6 @@ class Exercises extends Model
     {
         return $this->belongsToMany(Muscle_groups::class, 'exercise_muscle', 'exercise_id', 'muscle_group_id');
     }
-    
+
     public $timestamps = true;
 }
