@@ -18,3 +18,9 @@ Route::delete('/type_of_exercise/{id}', [TypeOfExerciseController::class, 'destr
 
 // exercises routes
 Route::get('/exercises', [ExercisesController::class, 'index']);
+Route::get('/exercises/{id}', [ExercisesController::class, 'show']);
+Route::get('/exercises/search/{name}', [ExercisesController::class, 'search_by_name']);
+Route::get('/exercises/equipment/{name}', [ExercisesController::class, 'search_by_equipment']);
+Route::get('/exercises/muscle_group/{name}', [ExercisesController::class, 'search_by_muscle_group']);
+Route::put('/exercises/{id}', [ExercisesController::class, 'update']);
+

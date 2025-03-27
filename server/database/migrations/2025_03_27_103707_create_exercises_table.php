@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->foreignId('type_of_exercise_id')->constrained()->onDelete('cascade');
-            $table->foreignId('muscle_group_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

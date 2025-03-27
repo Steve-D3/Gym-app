@@ -15,7 +15,6 @@ class Exercises extends Model
         'name',
         'description',
         'type_of_exercise_id',
-        'muscle_group_id',
     ];
 
     public function type_of_exercise()
@@ -23,10 +22,15 @@ class Exercises extends Model
         return $this->belongsTo(Type_of_exercise::class, 'type_of_exercise_id');
     }
 
-    public function muscle_group()
+    public function equipment()
     {
-        return $this->belongsTo(Muscle_groups::class, 'muscle_group_id');
+        return $this->belongsToMany(Equipment::class, 'exercise_equipment', 'exercise_id', 'equipment_id');
     }
 
+    public function muscle_group()
+    {
+        return $this->belongsToMany(Muscle_groups::class, 'exercise_muscle', 'exercise_id', 'muscle_group_id');
+    }
+    
     public $timestamps = true;
 }

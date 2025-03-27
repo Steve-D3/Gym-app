@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             MuscleGroupsSeeder::class,
             EquipmentSeeder::class,
             ExercisesSeeder::class,
+            ExerciseMuscleSeeder::class,
+            ExerciseEquipmentSeeder::class,
         ]);
     }
 }

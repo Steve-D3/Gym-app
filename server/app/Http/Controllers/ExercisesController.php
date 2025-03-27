@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreExercisesRequest;
 use App\Http\Requests\UpdateExercisesRequest;
+use App\Http\Resources\ExerciseResource;
+use App\Models\Equipment;
 use App\Models\Exercises;
+use App\Models\Muscle_groups;
 
 class ExercisesController extends Controller
 {
@@ -13,7 +16,7 @@ class ExercisesController extends Controller
      */
     public function index()
     {
-        return Exercises::with('type_of_exercise', 'muscle_group')->get();
+        return ExerciseResource::collection(Exercises::with(['type_of_exercise', 'equipment', 'muscle_group'])->get());
     }
 
     /**
@@ -35,9 +38,67 @@ class ExercisesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Exercises $exercises)
+    public function show(Exercises $id)
     {
-        //
+        return new ExerciseResource($id->load(['type_of_exercise', 'equipment', 'muscle_group']));
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function search_by_name(string $name)
+    {
+        $exercise = Exercises::where('name', 'like', '%' . $name . '%')
+            ->with(['type_of_exercise', 'equipment', 'muscle_group'])
+            ->get();
+
+        if (!$exercise) {
+            return response()->json(['message' => 'Exercise not found'], 404);
+        }
+
+        return ExerciseResource::collection($exercise);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function search_by_equipment(string $name)
+    {
+        $equipment = Equipment::where('name', 'like', '%' . ucfirst($name) . '%')->first();
+
+        if (!$equipment) {
+            return response()->json(['message' => 'Equipment not found'], 404);
+        }
+
+        $exercises = Exercises::whereHas('equipment', function ($query) use ($name) {
+            $query->where('name', 'like', '%' . ucfirst($name) . '%');
+        })
+            ->with(['type_of_exercise', 'equipment', 'muscle_group'])
+            ->get();
+
+
+        return ExerciseResource::collection($exercises);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function search_by_muscle_group(string $name)
+    {
+        $group = Muscle_groups::where('name', 'like', '%' . ucfirst($name) . '%')->first();
+
+        if (!$group) {
+            return response()->json(['message' => 'Muscle group not found'], 404);
+        }
+
+        $exercises = Exercises::whereHas('muscle_group', function ($query) use ($name) {
+            $query->where('name', 'like', '%' . ucfirst($name) . '%');
+        })
+            ->with(['type_of_exercise', 'equipment', 'muscle_group'])
+            ->get();
+
+
+        return ExerciseResource::collection($exercises);
     }
 
     /**
@@ -51,9 +112,22 @@ class ExercisesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateExercisesRequest $request, Exercises $exercises)
+    public function update(UpdateExercisesRequest $request, Exercises $id)
     {
-        //
+        // Update only the fields provided in the request
+        $id->update($request->validated());
+
+        // Sync relationships if necessary
+        if ($request->has('equipment_id')) {
+            $id->equipment()->sync($request->input('equipment_id'));
+        }
+
+        if ($request->has('muscle_group_id')) {
+            $id->muscle_group()->sync($request->input('muscle_group_id'));
+        }
+
+        // Return the updated exercise as a resource
+        return new ExerciseResource($id->load(['type_of_exercise', 'equipment', 'muscle_group']));
     }
 
     /**

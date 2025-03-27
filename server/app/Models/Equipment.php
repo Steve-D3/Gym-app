@@ -12,6 +12,6 @@ class Equipment extends Model
 
     public function exercises()
     {
-        return $this->hasMany(Exercises::class, 'equipment_id');
+        return $this->belongsToMany(Exercises::class, 'equipment_id');
     }
 }

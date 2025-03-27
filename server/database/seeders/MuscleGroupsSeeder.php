@@ -15,20 +15,20 @@ class MuscleGroupsSeeder extends Seeder
     public function run(): void
     {
         $muscleGroups = [
-            ['name' => 'Chest', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Back', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Shoulders', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Biceps', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Triceps', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Forearms', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Abs', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Obliques', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Glutes', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Quadriceps', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Hamstrings', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Calves', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Traps', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Lats', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Chest'],
+            ['name' => 'Back'],
+            ['name' => 'Shoulders'],
+            ['name' => 'Biceps'],
+            ['name' => 'Triceps'],
+            ['name' => 'Forearms'],
+            ['name' => 'Abs'],
+            ['name' => 'Obliques'],
+            ['name' => 'Glutes'],
+            ['name' => 'Quadriceps'],
+            ['name' => 'Hamstrings'],
+            ['name' => 'Calves'],
+            ['name' => 'Traps'],
+            ['name' => 'Lats'],
         ];
 
         DB::table('muscle_groups')->insert($muscleGroups);
